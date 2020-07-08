@@ -64,28 +64,26 @@ public class MainActivity extends AppCompatActivity {
                 checkPermission(103, Manifest.permission.READ_EXTERNAL_STORAGE);
                 break;
             case R.id.btnChangeBmp:
-                float playbackSpeed = 1.5f;
-                SoundPool soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
-                int soundId = soundPool.load(filePath, 1);
-                AudioManager mgr = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                final float volume = mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-
-                soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-                    @Override
-                    public void onLoadComplete(SoundPool arg0, int arg1, int arg2) {
-                        soundPool.play(soundId, volume, volume, 1, 0, playbackSpeed);
-                    }
-                });
-
-
 //                mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(Float.parseFloat(etBmp.getText().toString())));
 //                mp.start();
 
-//                if (etBmp.getText() != null && Integer.parseInt(etBmp.getText().toString()) > 60) {
-//                    Toast.makeText(mContext, "Value should be between 0 to 60", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    changeBmp();
-//                }
+                if (etBmp.getText() != null && Integer.parseInt(etBmp.getText().toString()) > 60) {
+                    Toast.makeText(mContext, "Value should be between 0 to 60", Toast.LENGTH_SHORT).show();
+                } else {
+                    float playbackSpeed = 1.5f;
+                    SoundPool soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
+                    int soundId = soundPool.load(filePath, 1);
+                    AudioManager mgr = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                    assert mgr != null;
+                    final float volume = mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+                    soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                        @Override
+                        public void onLoadComplete(SoundPool arg0, int arg1, int arg2) {
+                            soundPool.play(soundId, volume, volume, 1, 0, playbackSpeed);
+                        }
+                    });
+                }
                 break;
             case R.id.btnStart:
                 mp.start();
